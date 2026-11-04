@@ -12,10 +12,12 @@ noise are reused across conditions within (system, seed, k).
 Each condition is evaluated as its own binary task (normal vs. condition).
 """
 import os, json, time
+import os
+ROOT = os.path.dirname(os.path.abspath(__file__))
 import numpy as np
 import multiprocessing as mp
 
-RES = "/home/claude/exp/results_v2"; os.makedirs(RES, exist_ok=True)
+RES = os.path.join(ROOT, "results_v2"); os.makedirs(RES, exist_ok=True)
 ORIG = [0, 1, 2, 3, 4, 42, 123, 999]; NEW = list(range(5, 17))
 MAIN_K = {"14-bus": 10, "118-bus": 47}
 SWEEP_K = {"14-bus": [3, 5, 20, 29], "118-bus": [10, 20, 30, 70, 99]}

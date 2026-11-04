@@ -9,6 +9,8 @@ consumed in exactly the same order as in the original scripts, so the same
 seed yields the same dataset (power-flow differences < 1e-6, vs. noise 1e-2).
 """
 import os, warnings, logging
+import os
+ROOT = os.path.dirname(os.path.abspath(__file__))
 import numpy as np
 import pandapower as pp
 import pandapower.networks as pn
@@ -16,7 +18,7 @@ import pandapower.networks as pn
 warnings.filterwarnings("ignore")
 logging.getLogger("pandapower").setLevel(logging.ERROR)
 
-DATA = "/home/claude/exp/data"
+DATA = os.environ.get("FDI_DATA", os.path.join(ROOT, "data"))
 os.makedirs(DATA, exist_ok=True)
 CASES = {"14-bus": pn.case14, "118-bus": pn.case118}
 _NET = {}

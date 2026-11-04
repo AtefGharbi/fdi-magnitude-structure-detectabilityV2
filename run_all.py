@@ -1,7 +1,9 @@
 import os, sys, json, time
+import os
+ROOT = os.path.dirname(os.path.abspath(__file__))
 import multiprocessing as mp
 
-RES = "/home/claude/exp/results"
+RES = os.path.join(ROOT, "results")
 os.makedirs(RES, exist_ok=True)
 ORIG = [0, 1, 2, 3, 4, 42, 123, 999]
 NEW = list(range(5, 17))  # 12 additional seeds -> 20 total

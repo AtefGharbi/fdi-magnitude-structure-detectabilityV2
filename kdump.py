@@ -1,4 +1,6 @@
 import numpy as np, torch, json
+import os
+ROOT = os.path.dirname(os.path.abspath(__file__))
 import detectors as D
 from common import generate_h1, topology
 out={}
@@ -14,4 +16,4 @@ for s in ['14-bus','118-bus']:
     kls=D.ls_susceptance(Xtr[ytr==0].astype(float),nb,nl,fi,ti)
     out[s]=dict(k_learn=cap['m'].k_vec.detach().numpy().tolist(),k_ls=kls.tolist(),f1=f1)
     print(s,f1,np.median(kls))
-json.dump(out,open('kdump.json','w'))
+json.dump(out,open(os.path.join(ROOT,'kdump.json'),'w'))

@@ -1,7 +1,9 @@
 import json, glob, numpy as np
+import os
+ROOT = os.path.dirname(os.path.abspath(__file__))
 from scipy import stats, integrate
 
-RES = "/home/claude/exp/results_v2"
+RES = os.path.join(ROOT, "results_v2")
 READOUTS = ["rf", "pi", "dp", "fp"]
 SYS = ["14-bus", "118-bus"]
 
@@ -90,7 +92,7 @@ def analysis():
 def diag_summary():
     out = {}
     for s in SYS:
-        D = [json.load(open(f)) for f in sorted(glob.glob(f"/home/claude/exp/results/diag_{s}_s*.json"))]
+        D = [json.load(open(f)) for f in sorted(glob.glob(os.path.join(ROOT, "results", f"diag_{s}_s*.json")))]
         if not D: continue
         out[s] = {"n": len(D)}
         for v in ["rf", "pi", "mlp_nores", "pi_lsinit", "pi_cal", "pi_cal_big", "rf_plus_res"]:
@@ -107,7 +109,7 @@ def diag_summary():
 
 if __name__ == "__main__":
     A = analysis(); A["diag"] = diag_summary()
-    json.dump(A, open("/home/claude/exp/analysis.json", "w"), indent=1, default=float)
+    json.dump(A, open(os.path.join(ROOT, "analysis.json"), "w"), indent=1, default=float)
     for s in SYS:
         print("=====", s, "seeds", A["main"][s]["n_seeds"])
         for key, v in A["main"][s].items():
